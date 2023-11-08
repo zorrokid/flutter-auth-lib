@@ -1,7 +1,3 @@
 library auth_lib;
 
-/// A Calculator.
-class Calculator {
-  /// Returns [value] plus 1.
-  int addOne(int value) => value + 1;
-}
+export 'src/widgets/user_form.dart' show UserForm;
