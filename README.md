@@ -24,11 +24,35 @@ start using the package.
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+Initialize the library dependecies with _initializeAuthLib()_ in main
 
 ```dart
-const like = 'sample';
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  initializeAuthLib();
+
+  runApp(const MainApp());
+}
+```
+
+Then use _UserForm_ in a widget:
+
+```dart
+class LogIn extends StatelessWidget {
+  const LogIn({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Scaffold(
+      body: UserForm(),
+    );
+  }
+}
 ```
 
 ## Additional information
