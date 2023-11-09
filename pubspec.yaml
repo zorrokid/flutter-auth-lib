@@ -1,7 +1,7 @@
 name: auth_lib
-description: A new Flutter package project.
+description: Firebase authentication library for Flutter. 
 version: 0.0.1
-homepage:
+homepage: https://github.com/zorrokid/flutter-auth-lib 
 
 environment:
   sdk: '>=3.1.1 <4.0.0'
