@@ -24,7 +24,7 @@ class UserFormController extends GetxController {
     try {
       await repository.logInUser(
           email: emailController.value.text,
-          password: emailController.value.text);
+          password: passwordController.value.text);
       Get.snackbar(
         "User login",
         "User logged in",
