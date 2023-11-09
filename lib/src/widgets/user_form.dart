@@ -1,22 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-import 'package:auth_lib/src/enums.dart';
+import '../controllers/user_form_controller.dart';
+import '../enums.dart';
 
-class UserForm extends StatelessWidget {
-  UserForm({
+class UserForm extends GetView<UserFormController> {
+  const UserForm({
     super.key,
-    required this.onSubmit,
-    required this.title,
-    required this.status,
-    this.error,
   });
-  final void Function(String email, String password) onSubmit;
-  final String title;
-  final UserFormStatus status;
-  final String? error;
-  final _emailController = TextEditingController();
-  final _passwordController = TextEditingController();
-  Widget _createContentByState(UserFormStatus state) {
+  Widget _createContentByState(UserFormStatus status, String? error) {
     switch (status) {
       case UserFormStatus.submitting:
         return const Center(child: CircularProgressIndicator());
@@ -30,18 +22,18 @@ class UserForm extends StatelessWidget {
                 border: OutlineInputBorder(),
                 labelText: 'Email',
               ),
-              controller: _emailController,
+              controller: controller.emailController,
             ),
             TextFormField(
               decoration: const InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Password',
               ),
-              controller: _passwordController,
+              controller: controller.passwordController,
             ),
             status == UserFormStatus.failure && error != null
                 ? Text(
-                    error!,
+                    error,
                     style: const TextStyle(color: Colors.red),
                   )
                 : const SizedBox.shrink(),
@@ -51,25 +43,28 @@ class UserForm extends StatelessWidget {
   }
 
   void _submit(BuildContext context) {
-    if (_emailController.text.isEmpty || _passwordController.text.isEmpty) {
+    if (controller.emailController.text.isEmpty ||
+        controller.passwordController.text.isEmpty) {
       return;
     }
-    onSubmit(_emailController.text, _passwordController.text);
+    controller.submitForm();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: const Text("Log in"),
       ),
-      body: _createContentByState(status),
-      floatingActionButton: status == UserFormStatus.submitting
-          ? null
-          : FloatingActionButton(
-              onPressed: () => _submit(context),
-              child: const Icon(Icons.check),
-            ),
+      body: Obx(() => _createContentByState(
+          controller.status.value, controller.error.value)),
+      floatingActionButton:
+          Obx(() => controller.status.value != UserFormStatus.submitting
+              ? FloatingActionButton(
+                  onPressed: () => _submit(context),
+                  child: const Icon(Icons.check),
+                )
+              : const SizedBox.shrink()),
     );
   }
 }
