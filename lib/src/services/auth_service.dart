@@ -62,7 +62,7 @@ class AuthenticationService {
       print("Got user credential");
       return userCredential.user!;
     } on FirebaseAuthException catch (e) {
-      print("Error: $e")
+      print("Error: $e");
       throw AuthFailure.fromCode(e.code);
     } on Exception catch (error) {
       print("Error: $error");
