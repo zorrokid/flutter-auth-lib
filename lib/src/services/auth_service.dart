@@ -53,15 +53,18 @@ class AuthenticationService {
     required String password,
   }) async {
     try {
+      print("Logging in user with email: $email");
       final userCredential =
           await FirebaseAuth.instance.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
+      print("Got user credential");
       return userCredential.user!;
     } on FirebaseAuthException catch (e) {
       throw AuthFailure.fromCode(e.code);
-    } on Exception catch (_) {
+    } on Exception catch (error) {
+      print("Error: $error");
       throw const AuthFailure(
         message: 'An unknown error occurred.',
       );
