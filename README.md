@@ -24,6 +24,16 @@ start using the package.
 
 ## Usage
 
+Add dependency to _pubspec.yaml_ with github url and the most recent commit as value for ref field (since not published yet to a package repository):
+
+```yaml
+dependencies:
+  auth_lib: 
+    git: 
+      url: https://github.com/zorrokid/flutter-auth-lib.git
+      ref: d35dd0bb6d3b627f46164bd573a4edc177dab89
+```
+
 Initialize the library dependecies with _initializeAuthLib()_ in main
 
 ```dart
