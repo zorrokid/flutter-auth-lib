@@ -47,7 +47,7 @@ class UserForm extends GetView<UserFormController> {
         controller.passwordController.text.isEmpty) {
       return;
     }
-    controller.submitForm();
+    controller.submitLogIn();
   }
 
   @override

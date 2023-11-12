@@ -20,7 +20,7 @@ class UserFormController extends GetxController {
     return null;
   }
 
-  void submitForm() async {
+  void submitLogIn() async {
     try {
       await repository.logInUser(
           email: emailController.value.text,
@@ -37,5 +37,45 @@ class UserFormController extends GetxController {
       error.value = e.message;
       status.value = UserFormStatus.failure;
     }
+  }
+
+  Future<void> submitRegisterUser() async {
+    try {
+      await repository.registerUser(
+          email: emailController.value.text,
+          password: emailController.value.text);
+      Get.snackbar(
+        "User registration",
+        "User registered",
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      // TODO
+      // Get.to(() => const StartScreen(), binding: StartBinding());
+    } on AuthFailure catch (e) {
+      error.value = e.message;
+      status.value = UserFormStatus.failure;
+    }
+  }
+
+  Future<void> resetPassword() async {
+    try {
+      await repository.resetPassword(email.value);
+      Get.snackbar(
+        "Reset password",
+        "Password reset email sent",
+        snackPosition: SnackPosition.BOTTOM,
+      );
+      // TODO
+      // Get.to(() => const SignUpOrSignInScreen());
+    } on AuthFailure catch (e) {
+      error.value = e.message;
+      status.value = UserFormStatus.failure;
+    }
+  }
+
+  Future<void> logOut() async {
+    await repository.logOutUser();
+    // TODO
+    //Get.to(() => const SignUpOrSignInScreen(), binding: SignUpOrSignInBinding());
   }
 }
